@@ -1,0 +1,36 @@
+#爬取糗百段子
+import requests
+import random
+from bs4 import BeautifulSoup
+
+def getkid(kidnum):
+    try:
+        url = "https://www.qiushibaike.com/article/"
+        r = requests.get(url + str(kidnum))
+        r.raise_for_status
+        r.encoding = r.apparent_encoding
+        return r.text
+    except:
+        return ""
+
+def printkid(demo):
+    soup=BeautifulSoup(demo,"html.parser")
+    list1=soup.body.find_all('div','content')
+    a=str(list1)[22:]
+    print(a[:-7])
+
+
+def main():
+    ys="yes"
+    while ys[0] in ['y','Y',' ']:
+        kidnum = random.randint(118000000,120000000)
+        if ys[0] in ['y','Y',' ']:
+            demo = getkid(kidnum)
+            printkid(demo)
+        elif ys[0] in ['n','N']:
+            print("Goodbye!")
+        else:
+            print("error(程序已结束)")
+        ys = input("继续看不？（Y/N）:")
+
+main()
